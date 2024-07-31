@@ -1,0 +1,19 @@
+.statistics {
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  
+  .statistics h2 {
+    margin-bottom: 20px;
+  }
+  
+  .statistics ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .statistics ul li {
+    margin-bottom: 10px;
+  }
+  
