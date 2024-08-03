@@ -1,48 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Dashboard from './components/Dashboard.js';
 import './App.css';
-import BarChart from './components/BarChart';
-import LineChart from './components/LineChart';
-import PieChart from './components/PieChart';
-import Sidebar from './components/Sidebar';
-import data from './storage/data.json'; // Import the data from the JSON file
-
-const tests = Object.keys(data);
 
 const App = () => {
-  const [selectedTest, setSelectedTest] = useState(tests[0]);
-  const [chartData, setChartData] = useState(data[selectedTest]);
+  let [user, setUser] = useState(null);
+  let [showSignup, setShowSignup] = useState(false);
 
-  useEffect(() => {
-    setChartData(data[selectedTest]);
-  }, [selectedTest]);
-
-  return (
-    <div className="App">
-      <Sidebar tests={tests} setSelectedTest={setSelectedTest} />
-      <main className="content">
-        <h1>{selectedTest} Statistics</h1>
-        <div className="charts">
-          <div className="chart bar-chart">
-            <h2>Bar Chart</h2>
-            <BarChart data={chartData.barData} />
-          </div>
-          <div className="chart line-chart">
-            <h2>Line Chart</h2>
-            <LineChart data={chartData.lineData} />
-          </div>
-          <div className="chart pie-chart">
-            <h2>Pie Chart</h2>
-            <PieChart data={chartData.pieData} />
-          </div>
+  let handleShowLogin = () => setShowSignup(false);
+  let handleShowSignup = () => setShowSignup(true);
+ 
+   return (
+    <div className="app">
+      {user ? (
+        <div className='header'>
+          <h2>Welcome {user.email}</h2>
+        <Dashboard  />
         </div>
-        <div className="boxes">
-          {[...Array(5)].map((_, index) => (
-            <div key={index} className="box"></div>
-          ))}
-        </div>
-      </main>
+      ) : (
+        showSignup ? (
+          <Signup setUser={setUser} showLogin={handleShowLogin} />
+        ) : (
+          <Login setUser={setUser} showSignup={handleShowSignup} />
+        )
+      )}
     </div>
   );
-};
+
+  //to test Dashboard callinng only
+/*return (
+    <div className="app">
+
+        <Dashboard user={user} /> - calling the user isnt working on Dashboard.js side,  look into that
+      </div>
+  );
+*/ 
+
+}
+
 
 export default App;
